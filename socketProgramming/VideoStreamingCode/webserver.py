@@ -14,15 +14,15 @@ while True:
     connectionSocket, addr = serverSocket.accept()#Fill in start #Fill in end 
     try:
         message = connectionSocket.recv(1024).decode()#Fill in start #Fill in end 
+        print(message)
         filename = message.split()[1]
         f = open(filename[1:])
-        outputdata = f.readlines()#Fill in start #Fill in end
+        outputdata = f.read()#Fill in start #Fill in end
         #Send one HTTP header line into socket
         #Fill in start
-        
+        connectionSocket.send(("HTTP/1.1 200 OK\nConnection: close\nContent-length: %d\nContent-Type: text/html\n\n"%(len(outputdata))).encode())
         #Fill in end 
         #Send the content of the requested file to the client
-        print(outputdata)
         for i in range(0, len(outputdata)): 
             print(outputdata[i])
             connectionSocket.send(outputdata[i].encode())
@@ -31,11 +31,11 @@ while True:
     except IOError:
          #Send response message for file not found
          #Fill in start
-         connectionSocket.send("404 Not Found".encode())
+         connectionSocket.send("HTTP/1.1 404 Not Found".encode())
          #Fill in end
          #Close client socket
          #Fill in start
          connectionSocket.close()
          #Fill in end 
-    serverSocket.close()
-    sys.exit()#Terminate the program after sending the corresponding data
+serverSocket.close()
+sys.exit()#Terminate the program after sending the corresponding data
