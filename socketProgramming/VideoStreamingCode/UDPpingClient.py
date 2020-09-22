@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 21 17:09:04 2020
-
-@author: 坤林
-"""
-
 from time import time
 from socket import *
 
